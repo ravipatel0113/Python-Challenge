@@ -6,7 +6,7 @@ import os
 
 #Read the csv file for the location into the script
 csvpath = os.path.join('Resources','election_data.csv') #for Total votes using list method
-with open(csvpath, 'r') as csv_file:
+with open(csvpath) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     csv_header = next(csv_reader)
 
@@ -52,11 +52,18 @@ with open(csvpath,'r') as csvfile: #for all other Calculation without making a l
     print(f'Li: {li_percentage} % ({count["Li"]})')
     print(f'O`Tooley: {otooley_percentage} % (', end='')
     print(count["O'Tooley"] , end=''), print(")")
+
+    if count["Khan"] > count["Correy"] and count["Khan"] > count["Li"] and count["Khan"] > count["O'Tooley"]:
+      Winner = "Khan"
+    elif count["Correy"] > count["Khan"] and count["Correy"] > count["Li"] and count["Correy"] > count["O'Tooley"]:
+      Winner = "Correy"
+    elif count["Li"] > count["Khan"] and count["Li"] > count["Correy"] and count["Li"] > count["O'Tooley"]:
+      Winner = "Li"
+    else: 
+      Winner = "O'Tooley"
     
     print("---------------------------------------------------------")
-    print(f'Winner: {max(new_vote)}')   #Display the winner of the Election along with the County 
-    '''In the output you might see that is also show the voter ID as well as the County and the Candidate, 
-        Because I was having problem printing only the Candidate name. Hope you can understand'''
+    print(f'Winner: {Winner}') #Display the winner of the Election along with the County
     print("---------------------------------------------------------")
 
 # For Printing the output into the .txt file....
@@ -74,7 +81,7 @@ with open(output_path, 'w', newline='') as txtfile:
     txtfile.write(str(count["O'Tooley"]))
     txtfile.write(") \n")
     txtfile.write("--------------------------------------------------------- \n")
-    txtfile.write(f'Winner: {max(new_vote)} \n')
+    txtfile.write(f'Winner: {Winner} \n')
     txtfile.write("--------------------------------------------------------- \n")
     
     
